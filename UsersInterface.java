@@ -12,10 +12,13 @@ public class UsersInterface {
 
     public void play() {
         Account account = Account.getInstance();
-
-        System.out.println("***** Your current friends *******");
+        Moviedatabase moviedatabase = Moviedatabase.getInstance();
+        System.out.println("***** Your current Users *******");
         displayAccount();
+        System.out.println("***** Your current movies ******");
+        displayMoviedatabase();
 
+        //add user
         while(addUsers()) {
             String firstname = getField("First Name");
             String lastname = getField("Last Name");
@@ -23,10 +26,16 @@ public class UsersInterface {
 
             account.addUsers(firstname, lastname, creditcard);
         }
+        //add movies
+        while(addMovietitles()){
+            String name = getField("Name");
+            String cost = getField("The Cost");
+        }
 
-        System.out.println("***** Your updated list of friends *******");
+        System.out.println("***** Your updated list of Users *******");
         displayAccount();
-
+        System.out.println("Your updated list of movies ******");
+        displayMoviedatabase();
         System.out.println("\nHave a good day!");
     }
 
@@ -36,10 +45,16 @@ public class UsersInterface {
     }
 
     private boolean addUsers() {
-        System.out.print("Would you like to add a friend? (Y or N): ");
+        System.out.print("Would you like to add a User? (Y or N): ");
 
         String input = scanner.nextLine();
 
+        if(input.toLowerCase().trim().equals("y")) return true;
+        return false;
+    }
+    private boolean addMovietitles(){
+        System.out.print("Would you like to add a Movie? (Y or N): ");
+        String input = scanner.nextLine();
         if(input.toLowerCase().trim().equals("y")) return true;
         return false;
     }
@@ -52,6 +67,15 @@ public class UsersInterface {
             System.out.println(user.getFirstname() + " " + user.getLastname() + ": " + user.getCreditcard());
         }
     }
+    public void displayMoviedatabase() {
+        Moviedatabase moviedatabase = Moviedatabase.getInstance();
+        ArrayList<Movietitles> friends = Moviedatabase.getMoviedatabase();
+
+        for(Movietitles movies : friends) {
+            System.out.println(movies.getName() + " " + movies.getCost());
+        }
+    }
+
 
     public static void main(String[] args) {
         UsersInterface pi = new UsersInterface();

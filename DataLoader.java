@@ -26,7 +26,33 @@ public class DataLoader extends DataConstants{
 
             return Account;
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+        public static ArrayList<Movietitles> loadMoviedatabase() {
+            ArrayList<Movietitles> Moviedatabase = new ArrayList<Movietitles>();
+
+            try {
+                FileReader reader = new FileReader(MovieFileName);
+                JSONParser parser = new JSONParser();
+                JSONArray AccountJSON = (JSONArray)new JSONParser().parse(reader);
+
+                for(int i=0; i < AccountJSON.size(); i++) {
+                    JSONObject UsersJSON = (JSONObject)AccountJSON.get(i);
+                    String name = (String)UsersJSON.get(MovieName);
+                    String cost = (String)UsersJSON.get(Cost);
+                    Moviedatabase.add(new Movietitles(name, cost));
+                }
+
+                return Moviedatabase;
+
+            }
+
+        catch (Exception e) {
             e.printStackTrace();
         }
 
