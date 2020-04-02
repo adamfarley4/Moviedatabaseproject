@@ -67,4 +67,59 @@ public class DataWriter extends DataConstants {
 
         return MovietitlesDetails;
     }
+    //saving plays
+    public static void savePlaydatabase() {
+        Playdatabase playdatabase = Playdatabase.getInstance();
+        ArrayList<Playtitles> friends = Playdatabase.getPlaydatabase();
+        JSONArray jsonFriends = new JSONArray();
+
+        //creating all the json objects
+        for (int i = 0; i < friends.size(); i++) {
+            jsonFriends.add(getPlaytitlesJSON(friends.get(i)));
+        }
+
+        //Write JSON file
+        try (FileWriter file = new FileWriter(PlayFileName)) {
+
+            file.write(jsonFriends.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static JSONObject getPlaytitlesJSON(Playtitles playtitles) {
+        JSONObject PlaytitlesDetails = new JSONObject();
+        PlaytitlesDetails.put(PlayName, playtitles.getName());
+        PlaytitlesDetails.put(Cost, playtitles.getCost());
+
+        return PlaytitlesDetails;
+    }
+    //saving theaters
+    public static void saveTheaterdatabase() {
+        Theaterdatabase theaterdatabase = Theaterdatabase.getInstance();
+        ArrayList<Theaternames> friends = Theaterdatabase.getTheaterdatabase();
+        JSONArray jsonFriends = new JSONArray();
+
+        //creating all the json objects
+        for (int i = 0; i < friends.size(); i++) {
+            jsonFriends.add(getTheatertitlesJSON(friends.get(i)));
+        }
+
+        //Write JSON file
+        try (FileWriter file = new FileWriter(PlayFileName)) {
+
+            file.write(jsonFriends.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static JSONObject getTheatertitlesJSON(Theaternames theaternames) {
+        JSONObject TheatertitlesDetails = new JSONObject();
+        TheatertitlesDetails.put(TheaterName, theaternames.getName());
+
+        return TheatertitlesDetails;
+    }
 }

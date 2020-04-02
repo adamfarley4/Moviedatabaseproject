@@ -33,6 +33,7 @@ public class DataLoader extends DataConstants{
 
         return null;
     }
+        //load movies
         public static ArrayList<Movietitles> loadMoviedatabase() {
             ArrayList<Movietitles> Moviedatabase = new ArrayList<Movietitles>();
 
@@ -58,4 +59,55 @@ public class DataLoader extends DataConstants{
 
         return null;
     }
+    //load plays
+    public static ArrayList<Playtitles> loadPlaydatabase() {
+        ArrayList<Playtitles> Playdatabase = new ArrayList<Playtitles>();
+
+        try {
+            FileReader reader = new FileReader(PlayFileName);
+            JSONParser parser = new JSONParser();
+            JSONArray PlaydatabaseJSON = (JSONArray)new JSONParser().parse(reader);
+
+            for(int i=0; i < PlaydatabaseJSON.size(); i++) {
+                JSONObject UsersJSON = (JSONObject)PlaydatabaseJSON.get(i);
+                String name = (String)UsersJSON.get(PlayName);
+                String cost = (String)UsersJSON.get(Cost);
+                Playdatabase.add(new Playtitles(name, cost));
+            }
+
+            return Playdatabase;
+
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    public static ArrayList<Theaternames> loadTheaterdatabase() {
+        ArrayList<Theaternames> Theaterdatabase = new ArrayList<Theaternames>();
+
+        try {
+            FileReader reader = new FileReader(TheaterFileName);
+            JSONParser parser = new JSONParser();
+            JSONArray TheaterdatabaseJSON = (JSONArray)new JSONParser().parse(reader);
+
+            for(int i=0; i < TheaterdatabaseJSON.size(); i++) {
+                JSONObject UsersJSON = (JSONObject)TheaterdatabaseJSON.get(i);
+                String name = (String)UsersJSON.get(TheaterName);
+                Theaterdatabase.add(new Theaternames(name));
+            }
+
+            return Theaterdatabase;
+
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }
