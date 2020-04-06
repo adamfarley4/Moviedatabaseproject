@@ -121,8 +121,8 @@ public class UsersInterface {
                 		System.out.println("Pick a seat: ");
                 		cTheater.printSeats();
                 		cSeat = scanner.nextLine();
-                		System.out.println("Purchase succesful! Printing ticket..");
                 		movieTicketPrinter(current, isLogged, cMovie, cSeat, cTheater);
+                		System.out.println("Purchase succesful! Printing ticket..");
                 		String rChoice = getField("Would you like to leave a review? (Y or N)");
                 		if (rChoice.equals("n")) {
                         	System.out.println("Thank you for your patronage!");
@@ -154,8 +154,8 @@ public class UsersInterface {
                 		System.out.println("Pick a seat: ");
                 		cTheater.printSeats();
                 		cSeat = scanner.nextLine();
-                		System.out.println("Purchase succesful! Printing ticket..");
                 		playTicketPrinter(current, isLogged, cPlay, cSeat, cTheater);
+                		System.out.println("Purchase succesful! Printing ticket..");
                 		String rChoice = getField("Would you like to leave a review? (Y or N)");
                 		if (rChoice.equals("n")) {
                         	System.out.println("Thank you for your patronage!");
@@ -258,15 +258,20 @@ public class UsersInterface {
     }
     
     public void movieTicketPrinter(Users user, Boolean log, Movietitles movie, String seat, Theaternames theater) {
+    	String ccNum;
     	String name;
-    	String ccNum = user.getCreditcard();
     	String title = movie.getName();
     	String theaterName = theater.getName();
     	
-    	if(log == true)
+    	if(log == true) {
     		name = user.getFirstname() +" " +user.getLastname();
-    	else
+    		ccNum = user.getCreditcard();
+    	}
+    	else {
     		name = "guest";
+    		System.out.println("Enter a creditcard number for the purchase: ");
+    		ccNum = scanner.nextLine();
+    	}
     	
     	try (FileWriter file = new FileWriter("src/com/CSCE247/" +title +".txt")) {
 
@@ -301,10 +306,15 @@ public class UsersInterface {
     	String title = play.getName();
     	String theaterName = theater.getName();
     	
-    	if(log == true)
+    	if(log == true) {
     		name = user.getFirstname() +" " +user.getLastname();
-    	else
+    		ccNum = user.getCreditcard();
+    	}
+    	else {
     		name = "guest";
+    		System.out.println("Enter a creditcard number for the purchase: ");
+    		ccNum = scanner.nextLine();
+    	}
     	
     	try (FileWriter file = new FileWriter("src/com/CSCE247/" +title +".txt")) {
 
