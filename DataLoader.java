@@ -17,11 +17,14 @@ public class DataLoader extends DataConstants{
 
             for(int i=0; i < AccountJSON.size(); i++) {
                 JSONObject UsersJSON = (JSONObject)AccountJSON.get(i);
+                String username = (String)UsersJSON.get(UserUsername);
+                String password = (String)UsersJSON.get(UserPassword);
                 String firstname = (String)UsersJSON.get(UserFirstName);
                 String lastname = (String)UsersJSON.get(UserLastName);
                 String creditcard = (String)UsersJSON.get(UserccNum);
+                Boolean employee = (Boolean)UsersJSON.get(UserEmployee);
 
-                Account.add(new Users(firstname, lastname, creditcard));
+                Account.add(new Users(username, password, firstname, lastname, creditcard, employee));
             }
 
             return Account;

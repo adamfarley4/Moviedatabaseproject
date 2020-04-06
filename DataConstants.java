@@ -2,10 +2,13 @@ package com.CSCE247;
 
 public class DataConstants {
     //user constants
+	protected static final String UserUsername = "username";
+	protected static final String UserPassword = "password";
     protected static final String UserFileName = "src/com/CSCE247/users.json";
     protected static final String UserFirstName = "firstname";
     protected static final String UserLastName = "lastname";
     protected static final String UserccNum = "creditcard";
+    protected static final String UserEmployee = "employee";
 
 
     //Movies constants

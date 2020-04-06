@@ -21,8 +21,9 @@ public class Account {
         return userList;
     }
 
-    public void addUsers(String firstname, String lastname, String creditcard) {
-        userList.add(new Users(firstname, lastname, creditcard));
+    public void addUsers(Users user) {
+        userList.add(new Users(user.getUsername(), user.getPassword(), user.getFirstname(), user.getLastname(), user.getCreditcard(), user.getEmployee()));
         DataWriter.saveAccount();
     }
+    
 }
