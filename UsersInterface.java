@@ -1,7 +1,8 @@
 package com.CSCE247;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
+import java.io.*;
 
 public class UsersInterface {
     private Scanner scanner;
@@ -24,12 +25,14 @@ public class UsersInterface {
         String existingAccount;
         String logUsername;
         String logPassword;
-        Boolean isLogged;
+        Boolean isLogged = null;
         Users current = new Users(null,null,null,null,null,null);
         Theaternames cTheater = new Theaternames(null);
-        Movietitles cMovie = new Movietitles(null,null);
-        Playtitles cPlay = new Playtitles(null,null);
+        Movietitles cMovie = new Movietitles(null,null,null,null,null);
+        Playtitles cPlay = new Playtitles(null,null,null,null,null);
         String cSeat;
+        String cRating;
+        String cReview;
         
         System.out.println("Welcome to the show database!");
         logChoice = getField("Would you like to log in? (Y or N)");
@@ -63,6 +66,7 @@ public class UsersInterface {
         	}
         	else {
         		System.out.println("*ERROR*");
+        		System.exit(0);
         	}
         	if(current.getUsername() == null) {
         		System.out.println("Account not found. Continuing as guest...");
@@ -75,6 +79,7 @@ public class UsersInterface {
         }
         else {
         	System.out.println("*ERROR*");
+        	System.exit(0);
         }
         
         int switch1;
@@ -92,8 +97,10 @@ public class UsersInterface {
         	for(Theaternames theater: theaters)
     			if(theater.getName().equals(cTheaterName)) 
     				cTheater = theater;
-        	if(cTheater.getName() == null)
+        	if(cTheater.getName() == null) {
         		System.out.println("Theater not found. System shutting down...");
+        		System.exit(0);
+        	}
         	else {
         		System.out.println("Enter 1 to see a movie or 2 to see a play.");
                 switch2 = Integer.parseInt(scanner.nextLine());
@@ -106,13 +113,27 @@ public class UsersInterface {
                 	for(Movietitles movie: movies) 
             			if(movie.getName().equals(cMovieName)) 
             				cMovie = movie;
-                	if(cTheater.getName() == null)
+                	if(cMovie.getName() == null) {
                 		System.out.println("Movie not found. System shutting down...");
+                		System.exit(0);
+                	}
                 	else {
                 		System.out.println("Pick a seat: ");
                 		cTheater.printSeats();
                 		cSeat = scanner.nextLine();
                 		System.out.println("Purchase succesful! Printing ticket..");
+                		movieTicketPrinter(current, isLogged, cMovie, cSeat, cTheater);
+                		String rChoice = getField("Would you like to leave a review? (Y or N)");
+                		if (rChoice.equals("n")) {
+                        	System.out.println("Thank you for your patronage!");
+                        }
+                        else if(rChoice.equals("y")) {
+                        	cRating = getField("Please rate the movie 0-5 stars (example: ***)") +", ";
+                        	cReview = getField("Please leave a comment about the movie") +", ";
+                        	addMovieRating(cMovie, cRating, cReview);
+                        }
+                        else
+                        	System.out.println("Invalid input! System shutting down...");
                 		break;
                 	}
                 	break;
@@ -125,13 +146,27 @@ public class UsersInterface {
                 	for(Playtitles play: plays) 
             			if(play.getName().equals(cPlayName)) 
             				cPlay = play;
-                	if(cTheater.getName() == null)
+                	if(cPlay.getName() == null) {
                 		System.out.println("Play not found. System shutting down...");
+                		System.exit(0);
+                	}
                 	else {
                 		System.out.println("Pick a seat: ");
                 		cTheater.printSeats();
                 		cSeat = scanner.nextLine();
                 		System.out.println("Purchase succesful! Printing ticket..");
+                		playTicketPrinter(current, isLogged, cPlay, cSeat, cTheater);
+                		String rChoice = getField("Would you like to leave a review? (Y or N)");
+                		if (rChoice.equals("n")) {
+                        	System.out.println("Thank you for your patronage!");
+                        }
+                        else if(rChoice.equals("y")) {
+                        	cRating = getField("Please rate the play 0-5 stars (example: ***)") +", ";
+                        	cReview = getField("Please leave a comment about the play") +", ";
+                        	addPlayRating(cPlay, cRating, cReview);
+                        }
+                        else
+                        	System.out.println("Invalid input! System shutting down...");
                 		break;
                 	}
                 	break;
@@ -140,7 +175,14 @@ public class UsersInterface {
         	break;
         	
         case 2:
-        	cTheaterName = getField("Enter a new or existing theater for the show");
+        	if(current.getEmployee() == false) {
+        		System.out.println("User is not an employee. System shutting down...");
+        		System.exit(0);
+        	}
+        	else
+        		System.out.println("Employee access granted.");
+        	
+        	cTheaterName = getField("Enter a new or existing theater for the show");     	
         	for(Theaternames theater: theaters)
     			if(theater.getName().equals(cTheaterName)) 
     				cTheater = theater;
@@ -159,8 +201,9 @@ public class UsersInterface {
             	System.out.println("Adding new movie...");
         		String mname = getField("Name");
             	String mprice = getField("Price");
+            	String mtimes = getField("Showtimes (seperate each showtime by ,)");
 
-                movieDatabase.addMovietitles(mname, mprice);
+                movieDatabase.addMovietitles(mname, mprice, mtimes, " ", " ");
                 System.out.println(mname +" added!");
             	break;
             	
@@ -168,14 +211,15 @@ public class UsersInterface {
             	System.out.println("Adding new play...");
         		String pname = getField("Name");
             	String pprice = getField("Price");
+            	String ptimes = getField("Showtimes (seperate each show time by ,)");
 
-                movieDatabase.addMovietitles(pname, pprice);
+                playDatabase.addPlaytitles(pname, pprice, ptimes, " ", " ");
                 System.out.println(pname +" added!");
             	break;
             }
         	break;
         }
-        
+        System.exit(0);
     }
 
     private String getField(String prompt) {
@@ -194,51 +238,116 @@ public class UsersInterface {
     	else
     		return null;
     }
-
-    private Movietitles addMovietitles(){
-    	System.out.println("Adding new movie...");
-		String name = getField("Name");
-    	String cost = getField("Cost");
-
-        Movietitles newMovie = new Movietitles(name, cost);
-        return newMovie;
-    }
-
-    private Playtitles addPlaytitles(){
-    	System.out.println("Adding new Play...");
-		String name = getField("Name");
-    	String cost = getField("Cost");
-
-        Playtitles newPlay = new Playtitles(name, cost);
-        return newPlay;
+    
+    public void addPlayRating(Playtitles play, String rating, String review) {
+    	String temp1 = play.getRatings();
+    	String temp2 = play.getReviews();
+    	play.setRatings(temp1 += rating);
+    	play.setReviews(temp2 += review);
+    	System.out.println("Rating and review set successfully!");
+    	DataWriter.savePlaydatabase();
     }
     
-    private Theaternames addTheaternames(){
-    	System.out.println("Adding new theater...");
-		String name = getField("Name");
+    public void addMovieRating(Movietitles movie, String rating, String review) {
+    	String temp1 = movie.getRatings();
+    	String temp2 = movie.getReviews();
+    	movie.setRatings(temp1 += rating);
+    	movie.setReviews(temp2 += review);
+    	System.out.println("Rating and review set successfully!");
+    	DataWriter.saveMoviedatabase();
+    }
+    
+    public void movieTicketPrinter(Users user, Boolean log, Movietitles movie, String seat, Theaternames theater) {
+    	String name;
+    	String ccNum = user.getCreditcard();
+    	String title = movie.getName();
+    	String theaterName = theater.getName();
+    	
+    	if(log == true)
+    		name = user.getFirstname() +" " +user.getLastname();
+    	else
+    		name = "guest";
+    	
+    	try (FileWriter file = new FileWriter("src/com/CSCE247/" +title +".txt")) {
 
-        Theaternames newTheater = new Theaternames(name);
-        return newTheater;
+            file.write("****************************************************************\n"
+            		+ "																	\n"
+            		+ "																   	\n"
+            		+ "		Name: "+name+"		Creditcard #: " +ccNum +"\n"
+            		+ "																   	\n"
+            		+ "		Movie: "+title+"		Theater: "+theaterName+"\n"
+            		+ "																   	\n"
+            		+ "		Seat: "+seat+"												\n"
+            		+ "																  	\n"
+            		+ "																	\n"
+            		+ "																   	\n"
+            		+ " 					|  || |||  | ||||  ||						\n"
+            		+ "					|  || |||  | ||||  ||		   					\n"
+            		+ " 					|  || |||  | ||||  ||						\n"
+            		+ "					|  || |||  | ||||  ||		   					\n"
+            		+ " 																\n"
+            		+ "*****************************************************************");
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    	
+    }
+    
+    public void playTicketPrinter(Users user, Boolean log, Playtitles play, String seat, Theaternames theater) {
+    	String name;
+    	String ccNum = user.getCreditcard();
+    	String title = play.getName();
+    	String theaterName = theater.getName();
+    	
+    	if(log == true)
+    		name = user.getFirstname() +" " +user.getLastname();
+    	else
+    		name = "guest";
+    	
+    	try (FileWriter file = new FileWriter("src/com/CSCE247/" +title +".txt")) {
+
+            file.write("****************************************************************\n"
+            		+ "																	\n"
+            		+ "																   	\n"
+            		+ "		Name: "+name+"		Creditcard #: " +ccNum +"\n"
+            		+ "																   	\n"
+            		+ "		Play: "+title+"	Theater: "+theaterName+"\n"
+            		+ "																   	\n"
+            		+ "		Seat: "+seat+"												\n"
+            		+ "																  	\n"
+            		+ "																	\n"
+            		+ "																   	\n"
+            		+ " 					|  || |||  | ||||  ||						\n"
+            		+ "					|  || |||  | ||||  ||		   					\n"
+            		+ " 					|  || |||  | ||||  ||						\n"
+            		+ "					|  || |||  | ||||  ||		   					\n"
+            		+ " 																\n"
+            		+ "*****************************************************************");
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    	
     }
 
     public void displayMoviedatabase() {
-        Moviedatabase moviedatabase = Moviedatabase.getInstance();
         ArrayList<Movietitles> friends = Moviedatabase.getMoviedatabase();
 
         for(Movietitles movies : friends) {
-            System.out.println(movies.getName() + " $" + movies.getCost());
+            System.out.println(movies.getName() + " $" + movies.getCost() +" Showtimes: " +movies.getShowtimes());
         }
     }
     public void displayPlaydatabase() {
-        Playdatabase playdatabase = Playdatabase.getInstance();
         ArrayList<Playtitles> friends = Playdatabase.getPlaydatabase();
 
         for(Playtitles playtitles : friends) {
-            System.out.println(playtitles.getName() + " $" + playtitles.getCost());
+            System.out.println(playtitles.getName() + " $" + playtitles.getCost() +" Showtimes: " +playtitles.getShowtimes());
         }
     }
     public void displayTheaterdatabase() {
-        Theaterdatabase theaterdatabase = Theaterdatabase.getInstance();
         ArrayList<Theaternames> friends = Theaterdatabase.getTheaterdatabase();
 
         for(Theaternames theaternames : friends) {

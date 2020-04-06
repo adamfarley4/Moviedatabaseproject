@@ -49,7 +49,11 @@ public class DataLoader extends DataConstants{
                     JSONObject UsersJSON = (JSONObject)AccountJSON.get(i);
                     String name = (String)UsersJSON.get(MovieName);
                     String cost = (String)UsersJSON.get(Cost);
-                    Moviedatabase.add(new Movietitles(name, cost));
+                    String showtimes = (String)UsersJSON.get(Showtimes);
+                    String ratings = (String)UsersJSON.get(Ratings);
+                    String reviews = (String)UsersJSON.get(Reviews);
+                    
+                    Moviedatabase.add(new Movietitles(name, cost, showtimes, ratings, reviews));
                 }
 
                 return Moviedatabase;
@@ -75,7 +79,10 @@ public class DataLoader extends DataConstants{
                 JSONObject UsersJSON = (JSONObject)PlaydatabaseJSON.get(i);
                 String name = (String)UsersJSON.get(PlayName);
                 String cost = (String)UsersJSON.get(Cost);
-                Playdatabase.add(new Playtitles(name, cost));
+                String showtimes = (String)UsersJSON.get(Showtimes);
+                String ratings = (String)UsersJSON.get(Ratings);
+                String reviews = (String)UsersJSON.get(Reviews);
+                Playdatabase.add(new Playtitles(name, cost, showtimes, ratings, reviews));
             }
 
             return Playdatabase;

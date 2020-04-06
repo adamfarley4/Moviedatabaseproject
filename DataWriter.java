@@ -3,6 +3,7 @@ package com.CSCE247;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -10,7 +11,6 @@ public class DataWriter extends DataConstants {
 
     //saving account
     public static void saveAccount() {
-        Account account = Account.getInstance();
         ArrayList<Users> friends = Account.getAccount();
         JSONArray jsonFriends = new JSONArray();
 
@@ -44,7 +44,6 @@ public class DataWriter extends DataConstants {
 
     //saving movie
     public static void saveMoviedatabase() {
-        Moviedatabase moviedatabase = Moviedatabase.getInstance();
         ArrayList<Movietitles> friends = Moviedatabase.getMoviedatabase();
         JSONArray jsonFriends = new JSONArray();
 
@@ -67,12 +66,14 @@ public class DataWriter extends DataConstants {
         JSONObject MovietitlesDetails = new JSONObject();
         MovietitlesDetails.put(MovieName, movietitles.getName());
         MovietitlesDetails.put(Cost, movietitles.getCost());
+        MovietitlesDetails.put(Showtimes, movietitles.getShowtimes());
+        MovietitlesDetails.put(Ratings, movietitles.getRatings());
+        MovietitlesDetails.put(Reviews, movietitles.getReviews());
 
         return MovietitlesDetails;
     }
     //saving plays
     public static void savePlaydatabase() {
-        Playdatabase playdatabase = Playdatabase.getInstance();
         ArrayList<Playtitles> friends = Playdatabase.getPlaydatabase();
         JSONArray jsonFriends = new JSONArray();
 
@@ -95,12 +96,14 @@ public class DataWriter extends DataConstants {
         JSONObject PlaytitlesDetails = new JSONObject();
         PlaytitlesDetails.put(PlayName, playtitles.getName());
         PlaytitlesDetails.put(Cost, playtitles.getCost());
+        PlaytitlesDetails.put(Showtimes, playtitles.getShowtimes());
+        PlaytitlesDetails.put(Ratings, playtitles.getRatings());
+        PlaytitlesDetails.put(Reviews, playtitles.getReviews());
 
         return PlaytitlesDetails;
     }
     //saving theaters
     public static void saveTheaterdatabase() {
-        Theaterdatabase theaterdatabase = Theaterdatabase.getInstance();
         ArrayList<Theaternames> friends = Theaterdatabase.getTheaterdatabase();
         JSONArray jsonFriends = new JSONArray();
 
@@ -110,7 +113,7 @@ public class DataWriter extends DataConstants {
         }
 
         //Write JSON file
-        try (FileWriter file = new FileWriter(PlayFileName)) {
+        try (FileWriter file = new FileWriter(TheaterFileName)) {
 
             file.write(jsonFriends.toJSONString());
             file.flush();

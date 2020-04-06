@@ -3,10 +3,16 @@ package com.CSCE247;
 public class Playtitles {
     private String name;
     private String cost;
+    private String showtimes;
+    private String ratings;
+    private String reviews;
 
-    public Playtitles(String name, String cost) {
+    public Playtitles(String name, String cost, String showtimes, String ratings, String reviews) {
         this.name = name;
         this.cost = cost;
+        this.showtimes = showtimes;
+        this.ratings = ratings;
+        this.reviews = reviews;
     }
 
     public String getName() {
@@ -24,4 +30,28 @@ public class Playtitles {
     public void setCost(String cost) {
         this.cost = cost;
     }
+    
+    public String getShowtimes() {
+		return showtimes;
+	}
+
+	public void setShowtimes(String showtimes) {
+		this.showtimes = showtimes;
+	}
+
+	public String getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(String ratings) {
+		this.ratings = ratings;
+	}
+
+	public String getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(String reviews) {
+		this.reviews = reviews;
+	}
 }

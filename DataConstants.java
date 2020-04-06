@@ -15,6 +15,9 @@ public class DataConstants {
     protected static final String MovieFileName = "src/com/CSCE247/movies.json";
     protected static final String MovieName = "moviename";
     protected static final String Cost = "cost";
+    protected static final String Showtimes = "showtimes";
+    protected static final String Ratings = "ratings";
+    protected static final String Reviews = "Reviews";
 
     //play constants
     protected static final String PlayFileName = "src/com/CSCE247/plays.json";

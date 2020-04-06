@@ -20,10 +20,10 @@ public class Playdatabase {
 
     public static ArrayList<Playtitles> getPlaydatabase() {
         return playList;
-    }
+    }   
 
-    public void addPlaytitles(String name, String cost) {
-        playList.add(new Playtitles(name, cost));
+    public void addPlaytitles(String name, String cost, String showtimes, String ratings, String reviews) {
+        playList.add(new Playtitles(name, cost, showtimes, ratings, reviews));
         DataWriter.savePlaydatabase();
     }
 }
