@@ -22,7 +22,7 @@ public class Theaterdatabase {
         return theaterList;
     }
 
-    public static void addTheaternames(String name) {
+    public void addTheaternames(String name) {
         theaterList.add(new Theaternames(name));
         DataWriter.saveTheaterdatabase();
     }
