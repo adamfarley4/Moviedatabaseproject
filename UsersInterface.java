@@ -38,7 +38,7 @@ public class UsersInterface {
 
         System.out.println("Welcome to the show database!");
         logChoice = getField("Would you like to log in? (Y or N)");
-        if (logChoice.equals("n")) {
+        if (logChoice.equalsIgnoreCase("n")) {
         	System.out.println("Continuing as guest...");
         	isLogged = false;
         }
