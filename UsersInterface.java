@@ -1,12 +1,14 @@
 package com.CSCE247;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.*;
 import java.util.Scanner;
 import java.io.*;
 
 public class UsersInterface {
     private Scanner scanner;
-
+	private int amttix;
     public UsersInterface() {
         scanner = new Scanner(System.in);
     }
@@ -33,7 +35,7 @@ public class UsersInterface {
         String cSeat;
         String cRating;
         String cReview;
-        
+
         System.out.println("Welcome to the show database!");
         logChoice = getField("Would you like to log in? (Y or N)");
         if (logChoice.equals("n")) {
@@ -42,7 +44,7 @@ public class UsersInterface {
         }
         else if(logChoice.equalsIgnoreCase("y")) {
         	existingAccount = getField("Do you have an existing account? (Y or N)");
-        	if(existingAccount.equals("n")) {
+        	if(existingAccount.equalsIgnoreCase("n")) {
         		System.out.println("Creating new account...");
         		String username = getField("Username");
             	String password = getField("Password");
@@ -118,9 +120,12 @@ public class UsersInterface {
                 		System.exit(0);
                 	}
                 	else {
-                		System.out.println("Pick a seat:\n ");
-                		cTheater.printSeats();
-                		cSeat = scanner.nextLine();
+						System.out.print("How many tickets are you purchasing? ");
+						amttix = scanner.nextInt();
+						cTheater.printSeats();
+						System.out.println("\n");
+						System.out.println("Pick a seat: ");
+						cSeat = scanner.next();
                 		movieTicketPrinter(current, isLogged, cMovie, cSeat, cTheater);
                 		System.out.println("Purchase succesful! Printing ticket..");
                 		String rChoice = getField("Would you like to leave a review? (Y or N)");
@@ -151,10 +156,14 @@ public class UsersInterface {
                 		System.exit(0);
                 	}
                 	else {
-                		System.out.println("Pick a seat: ");
-                		cTheater.printSeats();
-                		cSeat = scanner.nextLine();
-                		playTicketPrinter(current, isLogged, cPlay, cSeat, cTheater);
+                		System.out.print("How many tickets are you purchasing? ");
+                			amttix = scanner.nextInt();
+							cTheater.printSeats();
+							System.out.println("\n");
+							System.out.println("Pick a seat: ");
+							cSeat = scanner.next();
+							playTicketPrinter(current, isLogged, cPlay, cSeat, cTheater);
+
                 		System.out.println("Purchase succesful! Printing ticket..");
                 		String rChoice = getField("Would you like to leave a review? (Y or N)");
                 		if (rChoice.equalsIgnoreCase("n")) {
@@ -284,7 +293,7 @@ public class UsersInterface {
             		+ "																   	\n"
             		+ "		Seat: "+seat+"												\n"
             		+ "																  	\n"
-            		+ "																	\n"
+            		+ "		Amount of tickets "+amttix+"														\n"
             		+ "																   	\n"
             		+ " 					|  || |||  | ||||  ||						\n"
             		+ "					|  || |||  | ||||  ||		   					\n"
@@ -327,7 +336,7 @@ public class UsersInterface {
             		+ "																   	\n"
             		+ "		Seat: "+seat+"												\n"
             		+ "																  	\n"
-            		+ "																	\n"
+            		+ "		amount of tickets: "+amttix+"															\n"
             		+ "																   	\n"
             		+ " 					|  || |||  | ||||  ||						\n"
             		+ "					|  || |||  | ||||  ||		   					\n"
