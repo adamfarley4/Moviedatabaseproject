@@ -119,11 +119,11 @@ public class UsersInterface {
                 	}
                 	else {
 						System.out.print("How many tickets are you purchasing? ");
-						amttix = scanner.nextInt();
+						amttix = Integer.parseInt(scanner.nextLine());
 						cTheater.printSeats();
 						System.out.println("\n");
 						System.out.println("Pick a seat: ");
-						cSeat = scanner.next();
+						cSeat = scanner.nextLine();
                 		movieTicketPrinter(current, isLogged, cMovie, cSeat, cTheater);
                 		System.out.println("Purchase succesful! Printing ticket..");
                 		String rChoice = getField("Would you like to leave a review? (Y or N)");
@@ -155,11 +155,11 @@ public class UsersInterface {
                 	}
                 	else {
                 		System.out.print("How many tickets are you purchasing? ");
-                			amttix = scanner.nextInt();
+                			amttix = Integer.parseInt(scanner.nextLine());
 							cTheater.printSeats();
 							System.out.println("\n");
 							System.out.println("Pick a seat: ");
-							cSeat = scanner.next();
+							cSeat = scanner.nextLine();
 							playTicketPrinter(current, isLogged, cPlay, cSeat, cTheater);
 
                 		System.out.println("Purchase succesful! Printing ticket..");
