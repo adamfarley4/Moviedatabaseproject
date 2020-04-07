@@ -1,7 +1,5 @@
 package com.CSCE247;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.*;
 import java.util.Scanner;
 import java.io.*;
@@ -184,7 +182,7 @@ public class UsersInterface {
         	break;
         	
         case 2:
-        	if(current.getEmployee() == false) {
+        	if(current.getEmployee() == null || current.getEmployee() == false) {
         		System.out.println("User is not an employee. System shutting down...");
         		System.exit(0);
         	}
