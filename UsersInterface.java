@@ -40,7 +40,7 @@ public class UsersInterface {
         	System.out.println("Continuing as guest...");
         	isLogged = false;
         }
-        else if(logChoice.equals("y")) {
+        else if(logChoice.equalsIgnoreCase("y")) {
         	existingAccount = getField("Do you have an existing account? (Y or N)");
         	if(existingAccount.equals("n")) {
         		System.out.println("Creating new account...");
@@ -54,7 +54,7 @@ public class UsersInterface {
                 current = new Users(username, password, firstname, lastname, creditcard, employee);
                 account.addUsers(current);
         	}
-        	else if(existingAccount.equals("y")) {
+        	else if(existingAccount.equalsIgnoreCase("y")) {
         		logUsername = getField("Please enter your Username");
         		logPassword = getField("Please enter your Password");
         		for(Users user: friends) {
@@ -118,16 +118,16 @@ public class UsersInterface {
                 		System.exit(0);
                 	}
                 	else {
-                		System.out.println("Pick a seat: ");
+                		System.out.println("Pick a seat:\n ");
                 		cTheater.printSeats();
                 		cSeat = scanner.nextLine();
                 		movieTicketPrinter(current, isLogged, cMovie, cSeat, cTheater);
                 		System.out.println("Purchase succesful! Printing ticket..");
                 		String rChoice = getField("Would you like to leave a review? (Y or N)");
-                		if (rChoice.equals("n")) {
+                		if (rChoice.equalsIgnoreCase("n")) {
                         	System.out.println("Thank you for your patronage!");
                         }
-                        else if(rChoice.equals("y")) {
+                        else if(rChoice.equalsIgnoreCase("y")) {
                         	cRating = getField("Please rate the movie 0-5 stars (example: ***)") +", ";
                         	cReview = getField("Please leave a comment about the movie") +", ";
                         	addMovieRating(cMovie, cRating, cReview);
@@ -157,10 +157,10 @@ public class UsersInterface {
                 		playTicketPrinter(current, isLogged, cPlay, cSeat, cTheater);
                 		System.out.println("Purchase succesful! Printing ticket..");
                 		String rChoice = getField("Would you like to leave a review? (Y or N)");
-                		if (rChoice.equals("n")) {
+                		if (rChoice.equalsIgnoreCase("n")) {
                         	System.out.println("Thank you for your patronage!");
                         }
-                        else if(rChoice.equals("y")) {
+                        else if(rChoice.equalsIgnoreCase("y")) {
                         	cRating = getField("Please rate the play 0-5 stars (example: ***)") +", ";
                         	cReview = getField("Please leave a comment about the play") +", ";
                         	addPlayRating(cPlay, cRating, cReview);
@@ -231,9 +231,9 @@ public class UsersInterface {
     private Boolean getBooleanField(String prompt) {
     	System.out.print(prompt + ": ");
     	String choice = scanner.nextLine();
-    	if(choice.equals("y"))
+    	if(choice.equalsIgnoreCase("y"))
     		return true;
-    	else if(choice.equals("n"))
+    	else if(choice.equalsIgnoreCase("n"))
     		return false;
     	else
     		return null;
