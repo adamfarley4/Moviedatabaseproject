@@ -35,14 +35,4 @@ class DataReaderTest {
 		ArrayList<Users> second = Account.getTheaterdatabase();
 		assertEquals("Regal",second.get(0).getName());
 	}
-	
-	
-	
-	
-	
-	
-	void testdisplayplaydatabase() {
-		
-	}
-	Account.add(new Users("Frozon 2","12$","9:30","**","Very good"))
 }
